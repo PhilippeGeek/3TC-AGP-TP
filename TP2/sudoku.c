@@ -128,6 +128,9 @@ int own_log2(int x) {
 }
 
 void solveSudoku(int sudoku[SUDOKU_SIZE][SUDOKU_SIZE]) {
+    if (!sudokuValide(sudoku)) {
+        return;
+    }
     solveSudokuRec(sudoku, NULL);
 }
 
