@@ -3,7 +3,7 @@
 //
 
 #include <stdlib.h>
-#include "sudoku.h"
+#include "headers/sudoku.h"
 
 #define SUDOKU_ERROR 255
 

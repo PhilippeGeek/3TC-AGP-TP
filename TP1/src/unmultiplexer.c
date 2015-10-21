@@ -20,12 +20,22 @@
 #include <stdio.h>
 #include <assert.h>
 #include <stdlib.h>
-#include "unmultiplexer.h"
+#include "headers/unmultiplexer.h"
 
-int main() {
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
+        fprintf(stderr, "Usage : %s dataFile.txt\n", argv[0]);
+        exit(2);
+    }
 
     // Open the original file with data
-    FILE *data = fopen("data.txt", "r");
+    FILE *data = fopen(argv[1], "r");
+
+    if (data == NULL) {
+        perror("Couldn't open data file.\n");
+        exit(3);
+    }
+
     // This will store the outputs file (depending on MAX_OUT_FILES)
     FILE *outs[MAX_OUT_FILES + 1]; // +1 is because we have the f0 file for error output
     char fileName[15]; // Just to store the name before open

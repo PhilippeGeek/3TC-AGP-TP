@@ -19,9 +19,9 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "utilSudoku.h"
-#include "main.h"
-#include "sudoku.h"
+#include "headers/utilSudoku.h"
+#include "headers/main.h"
+#include "headers/sudoku.h"
 
 int main(int argc, char *argv[]) {
     FILE *fich;
