@@ -28,14 +28,14 @@ int main(int argc, char *argv[]) {
     int sudoku[9][9];
 
     if (argc != 2) {
-        fprintf(stdout, " usage: %s nomFich.txt \n", argv[0]);
+        printf(" usage: %s nomFich.txt \n", argv[0]);
         exit(-1);
     }
 
     fich = fopen(argv[1], "r");
 
     if (!fich) {
-        fprintf(stderr, "erreur d'ouverture du fichier\n");
+        perror("Erreur d'ouverture du fichier\n");
         exit(1);
     }
 
