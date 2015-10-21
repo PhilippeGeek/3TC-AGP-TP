@@ -46,14 +46,15 @@ int main(int argc, char *argv[]) {
 
     if (sudokuValide(sudoku)) {
         printf("Et en plus il est valide !\n");
+        solveSudoku(sudoku);
+        printf("Résolution: \n");
+        ecrireSudoku(stdout, sudoku);
+        if (sudokuValide(sudoku)) {
+            printf("La solution est valide !\n");
+        }
+    } else {
+        printf("\nLe sudoku lu n'est pas valide, pas de résolution possible.\n");
     }
 
-    solveSudoku(sudoku);
-    printf("Résolution: \n");
-    ecrireSudoku(stdout, sudoku);
-    if (sudokuValide(sudoku)) {
-        printf("La solution est valide !\n");
-    }
-
-    return (0);
+    return 0;
 }
