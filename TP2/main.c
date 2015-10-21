@@ -19,14 +19,12 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
 #include "utilSudoku.h"
 #include "main.h"
 #include "sudoku.h"
 
 int main(int argc, char *argv[]) {
     FILE *fich;
-    char *nomFich;
     int sudoku[9][9];
 
     if (argc != 2) {
@@ -34,11 +32,12 @@ int main(int argc, char *argv[]) {
         exit(-1);
     }
 
-    nomFich = (char *) malloc(100 * sizeof(char));
-    strcpy(nomFich, argv[1]);
-    fich = fopen(nomFich, "r");
-    if (!fich)
+    fich = fopen(argv[1], "r");
+
+    if (!fich) {
         fprintf(stderr, "erreur d'ouverture du fichier\n");
+        exit(1);
+    }
 
     lireSudoku(fich, sudoku);
     printf(" sudoku lu: \n");
