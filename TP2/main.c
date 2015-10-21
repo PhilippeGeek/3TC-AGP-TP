@@ -41,7 +41,7 @@ int  main(int argc,char *argv[]) {
         fprintf(stderr,"erreur d'ouverture du fichier\n");
 
     lireSudoku(fich,sudoku);
-    fprintf(stdout," sudoku lu: \n");
+    printf(" sudoku lu: \n");
     ecrireSudoku(stdout,sudoku);
 
     if (sudokuValide(sudoku)) {

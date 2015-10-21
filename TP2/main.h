@@ -19,5 +19,7 @@
 
 #ifndef TP2_MAIN_H
 #define TP2_MAIN_H
-int  main(int argc,char *argv[]);
+
+int main(int argc, char *argv[]);
+
 #endif //TP2_MAIN_H
