@@ -15,16 +15,15 @@ file(
         TP1/src/*
 )
 
-file(
-        GLOB_RECURSE
-        tp2
-        TP2/src/*
+add_executable(
+        tp1.out
+        ${tp1}
 )
 
 file(
         GLOB_RECURSE
-        td5
-        TD5/*
+        tp2
+        TP2/src/*
 )
 
 add_executable(
@@ -32,9 +31,10 @@ add_executable(
         ${tp2}
 )
 
-add_executable(
-        tp1.out
-        ${tp1}
+file(
+        GLOB_RECURSE
+        td5
+        TD5/*
 )
 
 add_executable(
