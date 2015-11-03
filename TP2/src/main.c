@@ -19,42 +19,41 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
-#include "utilSudoku.h"
-#include "main.h"
-#include "sudoku.h"
+#include "headers/utilSudoku.h"
+#include "headers/main.h"
+#include "headers/sudoku.h"
 
-int  main(int argc,char *argv[])
-{
-  FILE *fich;
-  char *nomFich ;
-  int sudoku[9][9];
-  
-  if (argc!=2)
-    {
-      fprintf(stdout," usage: %s nomFich.txt \n",argv[0]);
-      exit(-1);
+int main(int argc, char *argv[]) {
+    FILE *fich;
+    int sudoku[9][9];
+
+    if (argc != 2) {
+        printf(" usage: %s nomFich.txt \n", argv[0]);
+        exit(-1);
     }
-  nomFich=(char *)malloc(100*sizeof(char));
-  strcpy(nomFich,argv[1]);
-  fich=fopen(nomFich,"r");
-  if (!fich)
-    fprintf(stderr,"erreur d'ouverture du fichier\n");
-  
- lireSudoku(fich,sudoku); 
- fprintf(stdout," sudoku lu: \n");
- ecrireSudoku(stdout,sudoku);
+
+    fich = fopen(argv[1], "r");
+
+    if (!fich) {
+        perror("Erreur d'ouverture du fichier\n");
+        exit(1);
+    }
+
+    lireSudoku(fich, sudoku);
+    printf(" sudoku lu: \n");
+    ecrireSudoku(stdout, sudoku);
 
     if (sudokuValide(sudoku)) {
         printf("Et en plus il est valide !\n");
+        solveSudoku(sudoku);
+        printf("Résolution: \n");
+        ecrireSudoku(stdout, sudoku);
+        if (sudokuValide(sudoku)) {
+            printf("La solution est valide !\n");
+        }
+    } else {
+        printf("\nLe sudoku lu n'est pas valide, pas de résolution possible.\n");
     }
 
-    solveSudoku(sudoku);
-    printf("Résolution: \n");
-    ecrireSudoku(stdout, sudoku);
-    if (sudokuValide(sudoku)) {
-        printf("La solution est valide !\n");
-    }
-
-   return(0);
+    return 0;
 }

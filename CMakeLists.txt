@@ -1,16 +1,32 @@
 cmake_minimum_required(VERSION 3.3)
 project(3TC_AGP_TP)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu11")
+set(EXECUTABLE_OUTPUT_PATH build/${CMAKE_BUILD_TYPE})
 
-set(SOURCE_FILES main.cpp)
+# Uncomment the following lines to link math library
+#if(UNIX)
+#    link_libraries(m)
+#endif(UNIX)
 
+file(
+        GLOB_RECURSE
+        tp1
+        TP1/src/*
+)
+
+file(
+        GLOB_RECURSE
+        tp2
+        TP2/src/*
+)
 
 add_executable(
         tp2.out
-        TP2/main.c TP2/utilSudoku.c TP2/main.h TP2/sudoku.c TP2/sudoku.h)
+        ${tp2}
+)
 
 add_executable(
         tp1.out
-        ${src}
-        TP1/unmultiplexer.c TP1/unmultiplexer.h)
+        ${tp1}
+)
