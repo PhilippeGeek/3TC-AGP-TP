@@ -20,4 +20,6 @@ void tree_add(TREE tree, int value);
 
 TREE tree_create(int value, TREE left, TREE right);
 
+void tree_print(TREE tree);
+
 #endif //INC_3TC_AGP_TP_TREE_H

@@ -46,3 +46,15 @@ void tree_add(TREE tree, int value) {
         tree_add((*good_side), value);
     }
 }
+
+void tree_print(TREE tree) {
+    if (tree->left != NULL) {
+        tree_print(tree->left);
+    }
+
+    printf("%d ", tree->value);
+
+    if (tree->right != NULL) {
+        tree_print(tree->right);
+    }
+}
