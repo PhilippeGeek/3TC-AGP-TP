@@ -54,15 +54,20 @@ void tree_add(TREE tree, int value) {
     }
 }
 
-void tree_print(TREE tree) {
+void tree_print_travel(TREE tree, int level) {
+
+    int i;
+    for (i = 0; i < level; i++)
+        printf("-");
+
+    printf("%d\n", tree->value);
+
     if (tree->left != NULL) {
-        tree_print(tree->left);
+        tree_print_travel(tree->left, level + 1);
     }
 
-    printf("%d ", tree->value);
-
     if (tree->right != NULL) {
-        tree_print(tree->right);
+        tree_print_travel(tree->right, level + 1);
     }
 }
 
@@ -87,4 +92,8 @@ int tree_is_balanced(TREE tree) {
             return 1;
         }
     }
+}
+
+void tree_print(TREE tree) {
+    tree_print_travel(tree, 0);
 }

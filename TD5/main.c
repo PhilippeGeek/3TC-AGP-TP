@@ -16,9 +16,15 @@ int main() {
     t2 = tree_create(42, NULL, NULL);
     tree = tree_create(0, t1, t2);
     printf("Tree is balanced : %d\n", tree_is_balanced(tree));
-    for (i = 0; i < 1337; i++) {
+    t1 = tree_create(1337, NULL, NULL);
+    t2 = tree_create(42, NULL, NULL);
+    tree = tree_create(0, t1, t2);
+    printf("Tree is balanced : %d\n", tree_is_balanced(tree));
+    for (i = 0; i < 25000; i++) {
         tree_add(t1, rand());
     }
+    t2 = tree_create(42, NULL, NULL);
+    tree = tree_create(0, t1, t2);
     tree_print(tree);
     printf("\n");
     printf("Tree depth : %d\n", tree_depth(tree));
