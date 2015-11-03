@@ -3,6 +3,7 @@
 //
 
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "tree.h"
 
@@ -12,4 +13,6 @@ int main() {
     t2 = tree_create(42, NULL, NULL);
     tree = tree_create(0, t1, t2);
     tree_print(tree);
+    printf("\n");
+    printf("Tree depth : %d\n", tree_depth(tree));
 }

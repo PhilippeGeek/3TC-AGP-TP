@@ -14,7 +14,9 @@ struct tree_model {
 typedef struct tree_model NODE;
 typedef NODE *TREE;
 
-int tree_depth(TREE, int count);
+int tree_depth_internal(TREE, int count);
+
+int tree_depth(TREE t);
 
 void tree_add(TREE tree, int value);
 
