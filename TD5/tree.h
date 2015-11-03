@@ -6,8 +6,8 @@
 
 struct tree_model {
     int value;
-    struct tree_model right;
-    struct tree_model left;
+    struct tree_model *right;
+    struct tree_model *left;
 };
 
 typedef struct tree_model LEAF;
