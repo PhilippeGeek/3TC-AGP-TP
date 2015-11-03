@@ -77,28 +77,32 @@ void tree_print_travel(TREE tree, int level) {
 }
 
 int tree_is_balanced(TREE tree) {
+    if (tree == NULL) {
+        return 1;
+    }
     int depthLeft = tree_depth(tree->left);
     int depthRight = tree_depth(tree->right);
     int difference = abs(depthLeft - depthRight);
 
-    if (difference != 0 && difference != 1) {
+    if (difference > 1) {
         return 0;
     } else {
-        if (tree->left != NULL && tree->right != NULL) {
-            return tree_is_balanced(tree->left) && tree_is_balanced(tree->right);
-        }
-        else if (tree->left != NULL) {
-            return tree_is_balanced(tree->left);
-        }
-        else if (tree->right != NULL) {
-            return tree_is_balanced(tree->right);
-        }
-        else {
-            return 1;
-        }
+        return tree_is_balanced(tree->left) && tree_is_balanced(tree->right);
     }
 }
 
 void tree_print(TREE tree) {
     tree_print_travel(tree, 0);
+}
+
+void tree_print_list(TREE t) {
+    if (t->left != NULL) {
+        tree_print_list(t->left);
+    }
+
+    printf("%d ", t->value);
+
+    if (t->right != NULL) {
+        tree_print_list(t->right);
+    }
 }
