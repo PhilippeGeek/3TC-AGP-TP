@@ -3,6 +3,7 @@
 //
 
 #include <stdlib.h>
+#include <stdio.h>
 #include "headers/sudoku.h"
 
 #define SUDOKU_ERROR 255
@@ -131,15 +132,23 @@ void solveSudoku(int sudoku[SUDOKU_SIZE][SUDOKU_SIZE]) {
     if (!sudokuValide(sudoku)) {
         return;
     }
-    solveSudokuRec(sudoku, NULL);
+    int i;
+    int prevSolutions[SUDOKU_SIZE][SUDOKU_SIZE];
+    for (i = 0; i < SUDOKU_SIZE; i++) {
+        initArray(prevSolutions[i], SUDOKU_SIZE, 0);
+    }
+    solveSudokuRec(sudoku, NULL, prevSolutions);
 }
 
-void solveSudokuRec(int sudoku[SUDOKU_SIZE][SUDOKU_SIZE], char *hasResult) {
+void solveSudokuRec(int sudoku[SUDOKU_SIZE][SUDOKU_SIZE], char *hasResult,
+                    int prevSolutionsArg[SUDOKU_SIZE][SUDOKU_SIZE]) {
     int cellToSolve = countCellToSolve(sudoku);
+    // Create the array which will contain solutions
+    int solutions[SUDOKU_SIZE][SUDOKU_SIZE];
+    int prevSolutions[SUDOKU_SIZE][SUDOKU_SIZE]; // Solution on n-1 state
+    copy_sudoku(prevSolutionsArg, prevSolutions);
     while (cellToSolve > 0) {
 
-        // Create the array which will contain solutions
-        int solutions[SUDOKU_SIZE][SUDOKU_SIZE];
         int i;
         for (i = 0; i < SUDOKU_SIZE; i++) {
             initArray(solutions[i], SUDOKU_SIZE, 0);
@@ -169,39 +178,79 @@ void solveSudokuRec(int sudoku[SUDOKU_SIZE][SUDOKU_SIZE], char *hasResult) {
                     if (solutions[i][j] != 0) {
                         int k;
                         for (k = 1; k < 10 && !goOut; k++) {
-                            if (solutions[i][j] & (1 << k)) {
-#if SUDOKU_DEBUG
-                                printf("%d est une solution en %d,%d\n", k, i, j);
-#endif
-                                int sudokuChild[SUDOKU_SIZE][SUDOKU_SIZE];
-                                copy_sudoku(sudoku, sudokuChild);
-                                sudokuChild[i][j] = k;
-                                char value = 0;
-                                solveSudokuRec(sudokuChild, &value);
-                                if (value == 1 && sudokuValide(sudokuChild)) {
-                                    copy_sudoku(sudokuChild, sudoku);
-                                    goOut = 1;
-                                } else {
-#if SUDOKU_DEBUG
-                                    printf("Impossible de le faire !\n");
-#endif
-                                }
+                            if ((solutions[i][j] & (1 << k)) && (solutions[i][j] ^ prevSolutions[i][j])) {
+                                goOut = make_sudoku_search_node(sudoku, solutions, i, j, k);
                             }
                         }
                     }
                 }
             }
 
+            if (!goOut) {
+
 #if SUDOKU_DEBUG
-            printf("Sudoku is not simple !\n");
+                printf("Sudoku is not simple !\n");
 #endif
+                for (i = 0; i < SUDOKU_SIZE && !goOut; i++) {
+                    for (j = 0; j < SUDOKU_SIZE && !goOut; j++) {
+                        if (solutions[i][j] != 0) {
+                            int k;
+                            for (k = 1; k < 10 && !goOut; k++) {
+                                if ((solutions[i][j] & (1 << k)) && !(solutions[i][j] ^ prevSolutions[i][j])) {
+                                    goOut = make_sudoku_search_node(sudoku, solutions, i, j, k);
+                                }
+                            }
+                        }
+                    }
+                }
+                if (!goOut) return;
+            }
             break;
         } else if (count == 0) {
             break;
         }
+        copy_sudoku(solutions, prevSolutions);
+        if (!sudokuValide(sudoku))
+            return;
     }
     if (hasResult != NULL && sudokuValide(sudoku))
         *hasResult = 1;
+}
+
+int BRANCH_ID = 0;
+int parent_branch = -1;
+int level = 0;
+int current_branch = 0;
+
+char make_sudoku_search_node(int sudoku[SUDOKU_SIZE][SUDOKU_SIZE], int solutionsOnParentNode[SUDOKU_SIZE][SUDOKU_SIZE],
+                             int line, int column,
+                             int value) {
+    int bid = BRANCH_ID++;
+    int old_parent = parent_branch;
+    char returnValue = 0;
+    level++;
+    parent_branch = current_branch;
+    current_branch = bid;
+#if SUDOKU_DEBUG
+    printf("== Branch %d>%d (%d) ==\n[l:%d,c:%d]=%d\n", parent_branch, bid, level, value, line, column);
+#endif
+    int sudokuChild[SUDOKU_SIZE][SUDOKU_SIZE];
+    copy_sudoku(sudoku, sudokuChild);
+    sudokuChild[line][column] = value;
+    char shouldContinue = 0;
+    solveSudokuRec(sudokuChild, &shouldContinue, solutionsOnParentNode);
+    if (shouldContinue == 1 && sudokuValide(sudokuChild)) {
+        copy_sudoku(sudokuChild, sudoku);
+        returnValue = 1;
+    } else {
+#if SUDOKU_DEBUG
+        printf("== End of %d>%d (%d) ==\n", parent_branch, bid, level);
+#endif
+    }
+    level--;
+    current_branch = parent_branch;
+    parent_branch = old_parent;
+    return returnValue;
 }
 
 void copy_sudoku(int parent[SUDOKU_SIZE][SUDOKU_SIZE], int child[SUDOKU_SIZE][SUDOKU_SIZE]) {

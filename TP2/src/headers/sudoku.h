@@ -5,9 +5,14 @@
 #ifndef TP2_SUDOKU_H
 #define TP2_SUDOKU_H
 #define SUDOKU_SIZE 9
-#define SUDOKU_DEBUG 0
+#define SUDOKU_DEBUG 1
 
-void solveSudokuRec(int sudoku[SUDOKU_SIZE][SUDOKU_SIZE], char *hasResult);
+char make_sudoku_search_node(int sudoku[SUDOKU_SIZE][SUDOKU_SIZE], int solutionsOnParentNode[SUDOKU_SIZE][SUDOKU_SIZE],
+                             int line, int column,
+                             int value);
+
+void solveSudokuRec(int sudoku[SUDOKU_SIZE][SUDOKU_SIZE], char *hasResult,
+                    int prevSolutionsArg[SUDOKU_SIZE][SUDOKU_SIZE]);
 
 void copy_sudoku(int pInt[SUDOKU_SIZE][SUDOKU_SIZE], int child[SUDOKU_SIZE][SUDOKU_SIZE]);
 
