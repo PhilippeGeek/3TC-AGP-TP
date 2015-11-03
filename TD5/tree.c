@@ -26,7 +26,7 @@ int tree_depth(TREE t, int count) {
 }
 
 TREE tree_create(int value, TREE left, TREE right) {
-    TREE new_tree = (TREE) malloc(sizeof(LEAF));
+    TREE new_tree = (TREE) malloc(sizeof(NODE));
     new_tree->value = value;
     new_tree->left = left;
     new_tree->right = right;

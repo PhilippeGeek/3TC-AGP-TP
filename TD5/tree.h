@@ -11,8 +11,8 @@ struct tree_model {
     struct tree_model *left;
 };
 
-typedef struct tree_model LEAF;
-typedef LEAF *TREE;
+typedef struct tree_model NODE;
+typedef NODE *TREE;
 
 int tree_depth(TREE, int count);
 
