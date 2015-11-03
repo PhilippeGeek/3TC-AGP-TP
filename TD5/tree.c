@@ -8,6 +8,9 @@
 #include "tree.h"
 
 int tree_depth(TREE t) {
+    if (t == NULL) {
+        return 0;
+    }
     return tree_depth_internal(t, 1);
 }
 
@@ -60,5 +63,28 @@ void tree_print(TREE tree) {
 
     if (tree->right != NULL) {
         tree_print(tree->right);
+    }
+}
+
+int tree_is_balanced(TREE tree) {
+    int depthLeft = tree_depth(tree->left);
+    int depthRight = tree_depth(tree->right);
+    int difference = abs(depthLeft - depthRight);
+
+    if (difference != 0 && difference != 1) {
+        return 0;
+    } else {
+        if (tree->left != NULL && tree->right != NULL) {
+            return tree_is_balanced(tree->left) && tree_is_balanced(tree->right);
+        }
+        else if (tree->left != NULL) {
+            return tree_is_balanced(tree->left);
+        }
+        else if (tree->right != NULL) {
+            return tree_is_balanced(tree->right);
+        }
+        else {
+            return 1;
+        }
     }
 }
