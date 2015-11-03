@@ -72,6 +72,8 @@ void tree_print_travel(TREE tree, int level) {
     if (tree->right != NULL) {
         tree_print_travel(tree->right, level + 1);
     }
+
+    printf("\n");
 }
 
 int tree_is_balanced(TREE tree) {
