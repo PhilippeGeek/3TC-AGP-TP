@@ -2,8 +2,9 @@
 // Created by pvienne on 03/11/15.
 //
 
-#include "tree.h"
 #include <stdlib.h>
+
+#include "tree.h"
 
 int tree_depth(TREE t, int count) {
     if (t->left == NULL && t->right == NULL) {
