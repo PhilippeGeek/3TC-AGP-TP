@@ -3,22 +3,23 @@
 //
 
 #include "tree.h"
+#include <stdlib.h>
 
 int tree_depth(TREE t, int count) {
     if (t->left == NULL && t->right == NULL) {
         return count;
     } else {
         if (t->left != NULL && t->right != NULL) {
-            int depthLeft = depth(t->left, count + 1);
-            int depthRight = depth(t->right, count + 1);
+            int depthLeft = tree_depth(t->left, count + 1);
+            int depthRight = tree_depth(t->right, count + 1);
 
             return depthLeft > depthRight ? depthLeft : depthRight;
         }
         else if (t->left != NULL) {
-            return depth(t->left, count + 1);
+            return tree_depth(t->left, count + 1);
         }
         else {
-            return depth(t->right, count + 1);
+            return tree_depth(t->right, count + 1);
         }
     }
 }
