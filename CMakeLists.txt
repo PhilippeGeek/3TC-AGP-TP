@@ -21,6 +21,12 @@ file(
         TP2/src/*
 )
 
+file(
+        GLOB_RECURSE
+        td5
+        TD5/*
+)
+
 add_executable(
         tp2.out
         ${tp2}
@@ -29,4 +35,9 @@ add_executable(
 add_executable(
         tp1.out
         ${tp1}
+)
+
+add_executable(
+        td5.out
+        ${td5}
 )
