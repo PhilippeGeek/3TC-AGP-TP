@@ -13,6 +13,8 @@ struct tree_model {
 typedef struct tree_model LEAF;
 typedef LEAF *TREE;
 
+TREE tree_create(int value, TREE left, TREE right);
+
 #define INC_3TC_AGP_TP_TREE_H
 
 #endif //INC_3TC_AGP_TP_TREE_H
