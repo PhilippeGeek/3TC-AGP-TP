@@ -7,6 +7,9 @@
 
 #include "tree.h"
 
+
+int tree_depth_internal(TREE, int count);
+
 int tree_depth(TREE t) {
     if (t == NULL) {
         return 0;
