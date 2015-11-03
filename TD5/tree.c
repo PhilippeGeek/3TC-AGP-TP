@@ -3,6 +3,7 @@
 //
 
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "tree.h"
 
@@ -31,4 +32,17 @@ TREE tree_create(int value, TREE left, TREE right) {
     new_tree->left = left;
     new_tree->right = right;
     return new_tree;
+}
+
+void tree_add(TREE tree, int value) {
+    if (tree == NULL) {
+        fprintf(stderr, "\nCan not add a value on a null TREE !\n");
+        return;
+    }
+    TREE *good_side = value < tree->value ? &(tree->left) : &(tree->right);
+    if ((*good_side) == NULL) {
+        (*good_side) = tree_create(value, NULL, NULL);
+    } else {
+        tree_add((*good_side), value);
+    }
 }

@@ -16,6 +16,8 @@ typedef NODE *TREE;
 
 int tree_depth(TREE, int count);
 
+void tree_add(TREE tree, int value);
+
 TREE tree_create(int value, TREE left, TREE right);
 
 #endif //INC_3TC_AGP_TP_TREE_H
