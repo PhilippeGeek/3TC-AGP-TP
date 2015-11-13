@@ -41,3 +41,14 @@ add_executable(
         td5.out
         ${td5}
 )
+
+file(
+        GLOB_RECURSE
+        tp3
+        TP3/*
+)
+
+add_executable(
+        tp3.out
+        ${tp3}
+)

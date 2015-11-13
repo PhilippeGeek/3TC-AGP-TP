@@ -80,11 +80,8 @@ int tree_is_balanced(TREE tree) {
     if (tree == NULL) {
         return 1;
     }
-    int depthLeft = tree_depth(tree->left);
-    int depthRight = tree_depth(tree->right);
-    int difference = abs(depthLeft - depthRight);
 
-    if (difference > 1) {
+    if (abs(tree_depth(tree->left) - tree_depth(tree->right)) > 1) {
         return 0;
     } else {
         return tree_is_balanced(tree->left) && tree_is_balanced(tree->right);
